@@ -48,7 +48,7 @@
 		
 		<br />
 
-        <g:render template="downloadRawDataLink" />
+        <g:render template="/plugin/downloadRawDataLink" />
 		
 	</form>
 </body>

@@ -15,6 +15,5 @@ ${summaryTable}
 ${geneListTable}
 
 <br />
-<g:if test="${zipLink}">
-    <a class='AnalysisLink' class='downloadLink' href="${resource(file: zipLink)}">Download raw R data</a>
-</g:if>
+<g:render template="/plugin/downloadRawDataLink" />
+
