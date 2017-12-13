@@ -32,7 +32,7 @@
       <br />
       <br />
       <span class='AnalysisHeader'>Heatmap</span><br /><br />
-      <i>Click on the heatmap image to download a PNG file as this may increase readability.</i><br><br>
+      <i>Click on the heatmap image to download a PNG file for increased readability.</i><br><br>
       <br />
       <br />
       <g:each var="location" in="${imageLocations}">
