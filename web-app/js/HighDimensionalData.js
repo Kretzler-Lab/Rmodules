@@ -393,7 +393,7 @@ HighDimensionalData.prototype.gather_high_dimensional_data = function (divId, hi
     var formValidator = new FormValidator(inputArray);
 
     if (formValidator.validateInputForm()) {
-      this.fetchNodeDetails( divId, function( result ) {
+      this.	( divId, function( result ) {
         _this.data = JSON.parse(result.responseText);
 
         if (doValidatePlatforms) {
@@ -631,7 +631,8 @@ HighDimensionalData.prototype.display_high_dimensional_popup = function () {
     this.view = this.generate_view();
     // then show it
     if (typeof viewport !== undefined) {
-        this.view.show(viewport, this.populate_data());
+    	var data = this.populate_data();
+        this.view.show(viewport, data);
     } else {
         console.error("No view port to display the window.");
     }
