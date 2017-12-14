@@ -48,11 +48,7 @@
 		
 		<br />
 
-        <g:if test="${zipLink}">
-            <div>
-                <a class='AnalysisLink' class='downloadLink' href="${resource(file: zipLink)}">Download raw R data</a>
-            </div>
-        </g:if>
+        <g:render template="/plugin/downloadRawDataLink" />
 		
 	</form>
 </body>
