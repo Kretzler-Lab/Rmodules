@@ -12,6 +12,7 @@ LineGraph.loader <- function(
 	library(plyr)
 	library(ggplot2)
 	library(Cairo)
+	library(gtools)
 	require(RColorBrewer)
 	
 	line.data<-read.delim(input.filename, header=T, stringsAsFactors = FALSE)
@@ -30,6 +31,7 @@ LineGraph.loader <- function(
     scaling.data <- read.delim(scaling.filename, header=T, stringsAsFactors = FALSE)
     }
   } else { # if scaling file is not available, each level of group (concept path) will be plotted at the number of that level
+  	line.data <- line.data[mixedorder(line.data$GROUP),]
     scaling.data <- data.frame(GROUP = unique(line.data$GROUP), VALUE = 1:length(unique(line.data$GROUP)), stringsAsFactors = FALSE)
   }
   # assign the X-axis position to each row
@@ -111,7 +113,7 @@ LineGraph.plotter <- function(
 	
 	#Convert the timepoint field to a factor.
 	dataOutput$TIMEPOINT <- factor(dataOutput$TIMEPOINT)
-		
+
 	#Convert the group field to a factor.
 	dataOutput$GROUP <- factor(dataOutput$GROUP)
 	######################################################
