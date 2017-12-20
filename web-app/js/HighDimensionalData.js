@@ -1,5 +1,5 @@
 var HighDimensionalData = function () {
-
+	
     /**
      * Get supported high dimensional data types
      * @returns {*}
@@ -42,20 +42,26 @@ var HighDimensionalData = function () {
  * Populate data to the popup window
  */
 HighDimensionalData.prototype.populate_data = function () {
+	console.log("in populate_data: ");
+	console.log(this.data);
+	
     for (var key in this.data) {
+    	console.log("key: " + key);
         if (this.data.hasOwnProperty(key)) {
-
+        	
             var _tmp_data = this.data[key];
 
             // set global marker type
             if (_tmp_data.platforms[0].markerType) {
+            	console.log("found marker type");
                 GLOBAL.HighDimDataType = _tmp_data.platforms[0].markerType;
             } else {
+            	console.log("no marker type found");
                 GLOBAL.HighDimDataType = "";
             }
 
             if (document.getElementById("highDimContainer")) {
-
+            	console.log("was able to get container");
                 document.getElementById("highDimensionType").value = key;
                 document.getElementById("platforms1").value = GLOBAL.HighDimDataType;
                 document.getElementById("gpl1").value = _tmp_data.platforms[0].id ? _tmp_data.platforms[0].id : "";
@@ -82,6 +88,8 @@ HighDimensionalData.prototype.populate_data = function () {
                 }else{
                 	document.getElementById("probesAggregationDiv").style.visibility = "visible";
                 }
+            } else {
+            	console.log("couldn't find highDimContainer");
             }
 
         } else {
@@ -190,10 +198,12 @@ HighDimensionalData.prototype.create_pathway_search_box = function (searchInputE
 }
 
 HighDimensionalData.prototype.generate_view = function () {
+	
+	console.log("in generate_view");
 
     var _this = this;
     var _view = this.view;
-
+    
     /**
      * to satisfy load high dim function
      * @private
@@ -270,6 +280,7 @@ HighDimensionalData.prototype.generate_view = function () {
      * @private
      */
     var _create_view = function () {
+    	console.log("in create view");
         return new Ext.Window({
 
             id: 'compareStepPathwaySelectionWindow',
@@ -323,6 +334,7 @@ HighDimensionalData.prototype.generate_view = function () {
     // ------------------------------------------- //
 
     if (!_view) {
+    	console.log("view is not yet created");
         _view = _create_view();
         _view.on('resize', function(vp, width, height) {
             var me = this,
@@ -351,7 +363,12 @@ HighDimensionalData.prototype.get_inputs = function (divId) {
 }
 
 HighDimensionalData.prototype.gather_high_dimensional_data = function (divId, hideAggregration, doValidatePlatforms) {
-
+	
+	console.log("in gather high dimensional data");
+	this.view = this.generate_view();
+	console.log("view: " + this.view);
+	this.display_high_dimensional_popup();
+	
     var _this = this;
     this.hideAggregration=hideAggregration;
     doValidatePlatforms = typeof doValidatePlatforms !== 'undefined' ? doValidatePlatforms : true;
@@ -393,8 +410,10 @@ HighDimensionalData.prototype.gather_high_dimensional_data = function (divId, hi
     var formValidator = new FormValidator(inputArray);
 
     if (formValidator.validateInputForm()) {
-      this.	( divId, function( result ) {
+      this.fetchNodeDetails( divId, function( result ) {
+    	  console.log("in callback: " + result.responseText);
         _this.data = JSON.parse(result.responseText);
+        console.log(_this.data.mrna.platforms);
 
         if (doValidatePlatforms) {
           platforms = _this.getPlatformValidator(_this.getPlatforms(_this.data));
@@ -628,11 +647,11 @@ HighDimensionalData.prototype.load_parameters = function (formParams) {
 HighDimensionalData.prototype.display_high_dimensional_popup = function () {
 
     // generate view and populate it with the data
-    this.view = this.generate_view();
+	this.view = this.generate_view();
     // then show it
+
     if (typeof viewport !== undefined) {
-    	var data = this.populate_data();
-        this.view.show(viewport, data);
+        this.view.show(viewport, this.populate_data());
     } else {
         console.error("No view port to display the window.");
     }
