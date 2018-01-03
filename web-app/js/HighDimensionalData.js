@@ -90,9 +90,28 @@ HighDimensionalData.prototype.populate_data = function () {
     }
 }
 
+HighDimensionalData.prototype.reconcile_pathways = function (inputPathways, ignoreElement) {
+    var inputPathwaysArr = inputPathways.split(", ");
+
+    var globalPathwaysArr = GLOBAL.CurrentPathwayName.split(", ");
+    var globalPathwayIdsArr = GLOBAL.CurrentPathway.split(",");
+
+    globalPathwaysArr.forEach( function(element, index) {
+        if ((inputPathwaysArr.indexOf(element) == -1) && (element != ignoreElement)) {
+            globalPathwaysArr.splice(index, 1);
+            globalPathwayIdsArr.splice(index, 1)
+        }
+    });
+
+    GLOBAL.CurrentPathway = globalPathwayIdsArr.join(",");
+    GLOBAL.CurrentPathwayName = globalPathwaysArr.join(", ");
+}
+
 HighDimensionalData.prototype.create_pathway_search_box = function (searchInputEltName, divName) {
 
     var ajaxurl, ds, resultTpl;
+
+    var self = this;
 
     // remove all elements
     var el = document.getElementById(searchInputEltName);
@@ -173,8 +192,11 @@ HighDimensionalData.prototype.create_pathway_search_box = function (searchInputE
                 GLOBAL.CurrentPathwayName += record.data.keyword;
             }
 
-            // Set the value in the text field
             var sp = Ext.get(searchInputEltName);
+            var pathways = sp.dom.value;
+
+            self.reconcile_pathways(pathways, record.data.keyword);
+
             sp.dom.value = GLOBAL.CurrentPathwayName;
 
             search.collapse();
@@ -287,6 +309,9 @@ HighDimensionalData.prototype.generate_view = function () {
                     id: 'dataAssociationApplyButton',
                     text: 'Apply Selections',
                     handler: function () {
+                        var sp = Ext.get('searchPathway');
+                        var pathways = sp.dom.value;
+                        _this.reconcile_pathways(pathways);
                         _display_high_dim_selection_summary();
                         _view.hide();
                     }
