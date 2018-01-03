@@ -161,7 +161,7 @@ LineGraph.plotter <- function(
 	p <- p + aes(colour = GROUP) + scale_colour_manual(values = rep_len(brewer.pal(noColors, "Set1"), length.out = noPoints))
 	
 	#Set the text options for the axis.
-	p <- p + theme(axis.text.x = element_text(size = 17,face="bold",angle=5));
+	p <- p + theme(axis.text.x = element_text(size = 17,face="bold",angle=90, hjust=1, vjust=1));
 	p <- p + theme(axis.text.y = element_text(size = 17,face="bold"));
 	
 	#Set the text options for the title.
