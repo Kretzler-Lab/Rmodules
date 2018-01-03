@@ -91,7 +91,9 @@ HighDimensionalData.prototype.populate_data = function () {
 }
 
 HighDimensionalData.prototype.reconcile_pathways = function (inputPathways, ignorePathway) {
-    var inputPathwaysArr = inputPathways.split(", ");
+    var inputPathwaysArr = inputPathways.split(",").map( function(element) {
+        return element.trim();
+    });
 
     var globalPathwaysArr = GLOBAL.CurrentPathwayName.split(", ");
     var globalPathwayIdsArr = GLOBAL.CurrentPathway.split(",");
