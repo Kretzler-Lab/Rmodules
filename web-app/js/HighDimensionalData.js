@@ -90,14 +90,14 @@ HighDimensionalData.prototype.populate_data = function () {
     }
 }
 
-HighDimensionalData.prototype.reconcile_pathways = function (inputPathways, ignoreElement) {
+HighDimensionalData.prototype.reconcile_pathways = function (inputPathways, ignorePathway) {
     var inputPathwaysArr = inputPathways.split(", ");
 
     var globalPathwaysArr = GLOBAL.CurrentPathwayName.split(", ");
     var globalPathwayIdsArr = GLOBAL.CurrentPathway.split(",");
 
     globalPathwaysArr.forEach( function(element, index) {
-        if ((inputPathwaysArr.indexOf(element) == -1) && (element != ignoreElement)) {
+        if ((inputPathwaysArr.indexOf(element) == -1) && (element != ignorePathway)) {
             globalPathwaysArr.splice(index, 1);
             globalPathwayIdsArr.splice(index, 1)
         }
