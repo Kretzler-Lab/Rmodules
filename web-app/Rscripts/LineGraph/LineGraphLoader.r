@@ -44,7 +44,7 @@ LineGraph.loader <- function(
   plotGroupValues <- unique(line.data$PLOT_GROUP)
   if (is.null(plotGroupValues) || is.na(plotGroupValues)) {
     imageFileName <- paste(output.file,".png",sep="")
-    CairoPNG(file = imageFileName, width=1200, height=600,units = "px")
+    CairoPNG(file = imageFileName, width=1200, height=900,units = "px")
     if (nrow(line.data) == 0) {
       Plot.error.message("Dataset is empty. Cannot plot LineGraph.");
     }
@@ -57,7 +57,7 @@ LineGraph.loader <- function(
     fileIter <- 1
     for (plotGroup in plotGroupValues) {
       imageFileName <- paste(output.file,fileIter,".png",sep="")
-      CairoPNG(file=imageFileName, width=1200, height=600,units = "px")
+      CairoPNG(file=imageFileName, width=1200, height=900,units = "px")
       if (length(which(line.data$PLOT_GROUP==plotGroup)) == 0) {
         Plot.error.message("Dataset is empty. Cannot plot LineGraph.");
       }
@@ -161,7 +161,7 @@ LineGraph.plotter <- function(
 	p <- p + aes(colour = GROUP) + scale_colour_manual(values = rep_len(brewer.pal(noColors, "Set1"), length.out = noPoints))
 	
 	#Set the text options for the axis.
-	p <- p + theme(axis.text.x = element_text(size = 17,face="bold",angle=5));
+	p <- p + theme(axis.text.x = element_text(size = 17,face="bold",angle=60, hjust=1, vjust=1));
 	p <- p + theme(axis.text.y = element_text(size = 17,face="bold"));
 	
 	#Set the text options for the title.
