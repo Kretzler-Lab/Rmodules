@@ -1,5 +1,4 @@
 package jobs.table.columns
-
 import com.google.common.base.Function
 import com.google.common.base.Predicate
 import com.google.common.collect.ForwardingMap
@@ -9,7 +8,6 @@ import groovy.transform.CompileStatic
 import org.transmartproject.core.dataquery.DataRow
 import org.transmartproject.core.dataquery.highdim.AssayColumn
 import org.transmartproject.core.dataquery.highdim.BioMarkerDataRow
-
 /**
  * Exposes a {@link org.transmartproject.core.dataquery.DataRow} as a
  * {@link Map}. The keys are the patient ids, the values are maps with
@@ -40,7 +38,13 @@ class HighDimensionalDataRowMapAdapter extends ForwardingMap<String, Map<String,
                             if (value == null) {
                                 return null
                             }
-                            def bioMarker = (row as BioMarkerDataRow).bioMarker ? "_" + (row as BioMarkerDataRow).bioMarker : ""
+                            def bioMarker = (row as BioMarkerDataRow).bioMarker;
+                            if (bioMarker != "" && bioMarker != "null") {
+                                bioMarker = "_" + bioMarker
+                            }
+                            else {
+                                bioMarker = "";
+                            }
                             ImmutableMap.of(contextPrepend + row.label + bioMarker, value)
                         } as Function
 
