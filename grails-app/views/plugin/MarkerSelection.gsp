@@ -16,7 +16,7 @@
 
             %{--High dimensional input--}%
             <div class="highDimContainer">
-                <span>Select a High Dimensional Data node from the Data Set Explorer Tree and drag it into the box.<br />
+                <span>Select a High Dimensional Data node from the Navigate Concepts panel and drag it into the box.<br />
                 Note: There must be two subsets in the Comparison panel. Normally, S1 would be considered
                 the reference group (for example, a control group), and S2, the comparison group (experimental group).</span>
                 <div id='divIndependentVariable' class="queryGroupIncludeSmall highDimBox"></div>
