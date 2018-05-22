@@ -23,7 +23,7 @@
                     %{--Independent variable--}%
                     <div class="highDimContainer">
                         <h3>Independent Variable</h3>
-                        <span>Select a continuous variable from the Data Set Explorer Tree and drag it into the box.</span>
+                        <span>Select a continuous variable from the Navigate Concepts panel and drag it into the box.</span>
                         <div id='divIndependentVariable' class="queryGroupIncludeSmall highDimBox"></div>
                         <div class="highDimBtns">
                             <button type="button" onclick="highDimensionalData.gather_high_dimensional_data('divIndependentVariable', true)">High Dimensional Data</button>
@@ -47,7 +47,7 @@
                     %{--Dependent variable--}%
                     <div class="highDimContainer">
                         <h3>Dependent Variable</h3>
-                        <span>Select a continuous variable from the Data Set Explorer Tree and drag it into the box.</span>
+                        <span>Select a continuous variable from the Navigate Concepts panel and drag it into the box.</span>
                         <div id='divDependentVariable' class="queryGroupIncludeSmall highDimBox"></div>
                         <div class="highDimBtns">
                             <button type="button" onclick="highDimensionalData.gather_high_dimensional_data('divDependentVariable', true)">High Dimensional Data</button>
