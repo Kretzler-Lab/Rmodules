@@ -17,7 +17,8 @@
 #dataAssociationBody {padding: 5px; border-bottom: 2px silver solid;}
 #dataAssociationBody {font-weight: normal; color: #333}
 
-.warning {color: firebrick}
+.warning {color: firebrick;}
+.gentle_warning {color: green;}
 .plot_hint {font-style: italic;}
 .downloadLink {font-weight: bold; margin: 10px 0 0 0;}
 .plot_result_container {padding: 10px; font-family: Tahoma, Arial, "sans serif"; font-size: .8em;}
