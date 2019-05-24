@@ -297,7 +297,7 @@ HighDimensionalData.prototype.generate_view = function () {
         return new Ext.Window({
 
             id: 'compareStepPathwaySelectionWindow',
-            title: 'Compare Subsets-Pathway Selection',
+            title: 'Compare Subsets Selection',
             layout: 'fit',
             width: 475,
             height: 370,
