@@ -1,5 +1,5 @@
 var HighDimensionalData = function () {
-
+	
     /**
      * Get supported high dimensional data types
      * @returns {*}
@@ -42,9 +42,10 @@ var HighDimensionalData = function () {
  * Populate data to the popup window
  */
 HighDimensionalData.prototype.populate_data = function () {
+	
     for (var key in this.data) {
         if (this.data.hasOwnProperty(key)) {
-
+        	
             var _tmp_data = this.data[key];
 
             // set global marker type
@@ -55,7 +56,6 @@ HighDimensionalData.prototype.populate_data = function () {
             }
 
             if (document.getElementById("highDimContainer")) {
-
                 document.getElementById("highDimensionType").value = key;
                 document.getElementById("platforms1").value = GLOBAL.HighDimDataType;
                 document.getElementById("gpl1").value = _tmp_data.platforms[0].id ? _tmp_data.platforms[0].id : "";
@@ -82,7 +82,7 @@ HighDimensionalData.prototype.populate_data = function () {
                 }else{
                 	document.getElementById("probesAggregationDiv").style.visibility = "visible";
                 }
-            }
+            } 
 
         } else {
             Ext.Msg.alert("Error", "Returned object is unknown.");
@@ -90,9 +90,30 @@ HighDimensionalData.prototype.populate_data = function () {
     }
 }
 
+HighDimensionalData.prototype.reconcile_pathways = function (inputPathways, ignorePathway) {
+    var inputPathwaysArr = inputPathways.split(",").map( function(element) {
+        return element.trim();
+    });
+
+    var globalPathwaysArr = GLOBAL.CurrentPathwayName.split(", ");
+    var globalPathwayIdsArr = GLOBAL.CurrentPathway.split(",");
+
+    globalPathwaysArr.forEach( function(element, index) {
+        if ((inputPathwaysArr.indexOf(element) == -1) && (element != ignorePathway)) {
+            globalPathwaysArr.splice(index, 1);
+            globalPathwayIdsArr.splice(index, 1)
+        }
+    });
+
+    GLOBAL.CurrentPathway = globalPathwayIdsArr.join(",");
+    GLOBAL.CurrentPathwayName = globalPathwaysArr.join(", ");
+}
+
 HighDimensionalData.prototype.create_pathway_search_box = function (searchInputEltName, divName) {
 
     var ajaxurl, ds, resultTpl;
+
+    var self = this;
 
     // remove all elements
     var el = document.getElementById(searchInputEltName);
@@ -173,8 +194,11 @@ HighDimensionalData.prototype.create_pathway_search_box = function (searchInputE
                 GLOBAL.CurrentPathwayName += record.data.keyword;
             }
 
-            // Set the value in the text field
             var sp = Ext.get(searchInputEltName);
+            var pathways = sp.dom.value;
+
+            self.reconcile_pathways(pathways, record.data.keyword);
+
             sp.dom.value = GLOBAL.CurrentPathwayName;
 
             search.collapse();
@@ -190,10 +214,10 @@ HighDimensionalData.prototype.create_pathway_search_box = function (searchInputE
 }
 
 HighDimensionalData.prototype.generate_view = function () {
-
+	
     var _this = this;
     var _view = this.view;
-
+    
     /**
      * to satisfy load high dim function
      * @private
@@ -287,6 +311,9 @@ HighDimensionalData.prototype.generate_view = function () {
                     id: 'dataAssociationApplyButton',
                     text: 'Apply Selections',
                     handler: function () {
+                        var sp = Ext.get('searchPathway');
+                        var pathways = sp.dom.value;
+                        _this.reconcile_pathways(pathways);
                         _display_high_dim_selection_summary();
                         _view.hide();
                     }
@@ -351,7 +378,10 @@ HighDimensionalData.prototype.get_inputs = function (divId) {
 }
 
 HighDimensionalData.prototype.gather_high_dimensional_data = function (divId, hideAggregration, doValidatePlatforms) {
-
+	
+	this.view = this.generate_view();
+	this.display_high_dimensional_popup();
+	
     var _this = this;
     this.hideAggregration=hideAggregration;
     doValidatePlatforms = typeof doValidatePlatforms !== 'undefined' ? doValidatePlatforms : true;
@@ -628,8 +658,9 @@ HighDimensionalData.prototype.load_parameters = function (formParams) {
 HighDimensionalData.prototype.display_high_dimensional_popup = function () {
 
     // generate view and populate it with the data
-    this.view = this.generate_view();
+	this.view = this.generate_view();
     // then show it
+
     if (typeof viewport !== undefined) {
         this.view.show(viewport, this.populate_data());
     } else {
