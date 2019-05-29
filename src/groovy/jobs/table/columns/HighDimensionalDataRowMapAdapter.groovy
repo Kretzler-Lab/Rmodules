@@ -8,6 +8,7 @@ import com.google.common.collect.Maps
 import groovy.transform.CompileStatic
 import org.transmartproject.core.dataquery.DataRow
 import org.transmartproject.core.dataquery.highdim.AssayColumn
+import org.transmartproject.core.dataquery.highdim.BioMarkerDataRow
 
 /**
  * Exposes a {@link org.transmartproject.core.dataquery.DataRow} as a
@@ -39,7 +40,14 @@ class HighDimensionalDataRowMapAdapter extends ForwardingMap<String, Map<String,
                             if (value == null) {
                                 return null
                             }
-                            ImmutableMap.of(contextPrepend + row.label, value)
+			    def bioMarker = (row as BioMarkerDataRow).bioMarker;
+                            if (bioMarker != "" && bioMarker != "null") {
+                                bioMarker = "_" + bioMarker
+                            }
+                            else {
+                                bioMarker = "";
+                            }
+                            ImmutableMap.of(contextPrepend + row.label + bioMarker, value)
                         } as Function
 
         // drop nulls
