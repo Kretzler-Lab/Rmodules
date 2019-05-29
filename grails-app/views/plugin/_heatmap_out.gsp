@@ -2,7 +2,7 @@
 
 <p>
     <div class="plot_hint">
-        Click on the heatmap image to open it in a new window as this may increase readability.
+        Click on the heatmap image to download a PNG file for increased readability.
         <br><br>
     </div>
 
